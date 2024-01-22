@@ -1,0 +1,80 @@
+version: 2
+
+models:
+  - name: mart_product_sales
+    description: List of every product sold
+    columns:
+      - name: sales_order_date
+        tests:
+          - not_null
+      - name: product_name
+        tests:
+          - not_null
+      - name: company_name
+        tests:
+          - not_null
+      - name: billing_status
+        tests:
+          - not_null
+          - accepted_values:
+              values: ['Completed', 'Incomplete', 'Unknown']
+      - name: delivery_status
+        tests:
+          - not_null
+          - accepted_values:
+              values: ['Completed', 'Incomplete', 'Unknown']
+      - name: quantity
+        tests:
+          - not_null
+      - name: product_price
+        tests:
+          - not_null
+      - name: weight_measure
+        tests:
+          - not_null
+      - name: total_gross_amount
+        tests:
+          - not_null
+      - name: order_number
+        tests:
+          - not_null
+          - unique
+
+
+
+  - name: mart_sales_orders
+    description: List of every sales order
+    columns:
+      - name: sales_order_date
+        tests:
+          - not_null
+      - name: company_name
+        tests:
+          - not_null
+      - name: country
+        tests:
+          - not_null
+      - name: city
+        tests:
+          - not_null
+      - name: employee_name
+        tests:
+          - not_null
+      - name: delivery_status
+        tests:
+          - not_null
+          - accepted_values:
+              values: ['Completed', 'Incomplete', 'Unknown']
+      - name: billing_status
+        tests:
+          - not_null
+          - accepted_values:
+              values: ['Completed', 'Incomplete', 'Unknown']
+      - name: order_gross_amount
+        tests:
+          - not_null
+      - name: order_number
+        tests:
+          - not_null
+          - unique
+

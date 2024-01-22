@@ -1,0 +1,64 @@
+version: 2
+
+models:
+  - name: dim_adresses
+    description: List of every known address
+    columns:
+      - name: address_id
+        tests:
+          - not_null
+          - unique
+      - name: city
+        tests:
+          - not_null
+      - name: country
+        tests:
+          - not_null
+      - name: latitude
+        tests:
+          - not_null
+      - name: longitude
+        tests:
+          - not_null
+
+  - name: dim_business_partners
+    description: List of every known business partner
+    columns:
+      - name: partner_id
+        tests:
+          - not_null
+          - unique
+      - name: company_name
+        tests:
+          - not_null
+  
+  - name: dim_employees
+    description: List of every known employee
+    columns:
+      - name: employee_id
+        tests:
+          - not_null
+          - unique
+      - name: employee_name
+        tests:
+          - not_null
+  
+  - name: dim_product
+    description: List of every known product
+    columns:
+      - name: product_id
+        tests:
+          - not_null
+          - unique
+      - name: product_category_id
+        tests:
+          - not_null
+      - name: partner_id
+        tests:
+          - not_null
+      - name: product_description
+        tests:
+          - not_null
+      - name: price
+        tests:
+          - not_null

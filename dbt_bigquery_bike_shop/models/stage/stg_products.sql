@@ -1,0 +1,21 @@
+select
+    productid as product_id,
+    typecode as type_code,
+    prodcategoryid as product_category_id,
+    createdby as created_by,
+    parse_date('%Y%m%d', cast(createdat as string)) as created_at,
+    changedby as changed_by,
+    parse_date('%Y%m%d', cast(changedat as string)) as changed_at,
+    supplier_partnerid as partner_id,
+    taxtariffcode as tax_tariff_code,
+    quantityunit as quantity_unit,
+    weightmeasure as weight_measure,
+    weightunit as weight_unit,
+    currency,
+    price,
+    width,
+    depth,
+    height,
+    dimensionunit as dimension_unit,
+    productpicurl as product_pic_url
+from RAW_CLIENT_BIKE_SHOP.products

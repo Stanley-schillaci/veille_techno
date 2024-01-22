@@ -1,0 +1,46 @@
+version: 2
+
+models:
+  - name: activity_sales_orders
+    description: Records of every sales order
+    columns:
+      - name: sales_order_id
+        tests:
+          - not_null
+          - unique
+      - name: partner_id
+        tests:
+          - not_null
+      - name: employee_id
+        tests:
+          - not_null
+      - name: sales_order_date
+        tests:
+          - not_null
+      
+  - name: activity_sales_items
+    description: Records of every sales item
+    columns:
+      - name: sales_order_id
+        tests:
+          - not_null
+      - name: sales_order_item_id
+        tests:
+          - not_null
+          - unique
+      - name: product_id
+        tests:
+          - not_null
+      - name: partner_id
+        tests:
+          - not_null
+      - name: sales_order_date
+        tests:
+          - not_null
+      - name: quantity
+        tests:
+          - not_null
+      - name: gross_amount
+        tests:
+          - not_null
+      
