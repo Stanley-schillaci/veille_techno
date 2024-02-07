@@ -2,7 +2,7 @@
 
 Ce projet a pour but de réaliser une veille technologique sur les techniques pour maintenir un projet client de gestion de donnees, depuis son stockage, vers sa transformation en passant par son exploitation via la visualisation.
 
-## Auteurs 
+## Auteur 
 - Stanley Schillaci
 
 ## Prise en main
