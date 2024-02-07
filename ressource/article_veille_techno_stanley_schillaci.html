@@ -1,0 +1,950 @@
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=utf-8"/><title>Quels outils utilisé pour traiter de la donnée source et apporter une plus value dessus ?</title><style>
+/* cspell:disable-file */
+/* webkit printing magic: print all background colors */
+html {
+	-webkit-print-color-adjust: exact;
+}
+* {
+	box-sizing: border-box;
+	-webkit-print-color-adjust: exact;
+}
+
+html,
+body {
+	margin: 0;
+	padding: 0;
+}
+@media only screen {
+	body {
+		margin: 2em auto;
+		max-width: 900px;
+		color: rgb(55, 53, 47);
+	}
+}
+
+body {
+	line-height: 1.5;
+	white-space: pre-wrap;
+}
+
+a,
+a.visited {
+	color: inherit;
+	text-decoration: underline;
+}
+
+.pdf-relative-link-path {
+	font-size: 80%;
+	color: #444;
+}
+
+h1,
+h2,
+h3 {
+	letter-spacing: -0.01em;
+	line-height: 1.2;
+	font-weight: 600;
+	margin-bottom: 0;
+}
+
+.page-title {
+	font-size: 2.5rem;
+	font-weight: 700;
+	margin-top: 0;
+	margin-bottom: 0.75em;
+}
+
+h1 {
+	font-size: 1.875rem;
+	margin-top: 1.875rem;
+}
+
+h2 {
+	font-size: 1.5rem;
+	margin-top: 1.5rem;
+}
+
+h3 {
+	font-size: 1.25rem;
+	margin-top: 1.25rem;
+}
+
+.source {
+	border: 1px solid #ddd;
+	border-radius: 3px;
+	padding: 1.5em;
+	word-break: break-all;
+}
+
+.callout {
+	border-radius: 3px;
+	padding: 1rem;
+}
+
+figure {
+	margin: 1.25em 0;
+	page-break-inside: avoid;
+}
+
+figcaption {
+	opacity: 0.5;
+	font-size: 85%;
+	margin-top: 0.5em;
+}
+
+mark {
+	background-color: transparent;
+}
+
+.indented {
+	padding-left: 1.5em;
+}
+
+hr {
+	background: transparent;
+	display: block;
+	width: 100%;
+	height: 1px;
+	visibility: visible;
+	border: none;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.09);
+}
+
+img {
+	max-width: 100%;
+}
+
+@media only print {
+	img {
+		max-height: 100vh;
+		object-fit: contain;
+	}
+}
+
+@page {
+	margin: 1in;
+}
+
+.collection-content {
+	font-size: 0.875rem;
+}
+
+.column-list {
+	display: flex;
+	justify-content: space-between;
+}
+
+.column {
+	padding: 0 1em;
+}
+
+.column:first-child {
+	padding-left: 0;
+}
+
+.column:last-child {
+	padding-right: 0;
+}
+
+.table_of_contents-item {
+	display: block;
+	font-size: 0.875rem;
+	line-height: 1.3;
+	padding: 0.125rem;
+}
+
+.table_of_contents-indent-1 {
+	margin-left: 1.5rem;
+}
+
+.table_of_contents-indent-2 {
+	margin-left: 3rem;
+}
+
+.table_of_contents-indent-3 {
+	margin-left: 4.5rem;
+}
+
+.table_of_contents-link {
+	text-decoration: none;
+	opacity: 0.7;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.18);
+}
+
+table,
+th,
+td {
+	border: 1px solid rgba(55, 53, 47, 0.09);
+	border-collapse: collapse;
+}
+
+table {
+	border-left: none;
+	border-right: none;
+}
+
+th,
+td {
+	font-weight: normal;
+	padding: 0.25em 0.5em;
+	line-height: 1.5;
+	min-height: 1.5em;
+	text-align: left;
+}
+
+th {
+	color: rgba(55, 53, 47, 0.6);
+}
+
+ol,
+ul {
+	margin: 0;
+	margin-block-start: 0.6em;
+	margin-block-end: 0.6em;
+}
+
+li > ol:first-child,
+li > ul:first-child {
+	margin-block-start: 0.6em;
+}
+
+ul > li {
+	list-style: disc;
+}
+
+ul.to-do-list {
+	padding-inline-start: 0;
+}
+
+ul.to-do-list > li {
+	list-style: none;
+}
+
+.to-do-children-checked {
+	text-decoration: line-through;
+	opacity: 0.375;
+}
+
+ul.toggle > li {
+	list-style: none;
+}
+
+ul {
+	padding-inline-start: 1.7em;
+}
+
+ul > li {
+	padding-left: 0.1em;
+}
+
+ol {
+	padding-inline-start: 1.6em;
+}
+
+ol > li {
+	padding-left: 0.2em;
+}
+
+.mono ol {
+	padding-inline-start: 2em;
+}
+
+.mono ol > li {
+	text-indent: -0.4em;
+}
+
+.toggle {
+	padding-inline-start: 0em;
+	list-style-type: none;
+}
+
+/* Indent toggle children */
+.toggle > li > details {
+	padding-left: 1.7em;
+}
+
+.toggle > li > details > summary {
+	margin-left: -1.1em;
+}
+
+.selected-value {
+	display: inline-block;
+	padding: 0 0.5em;
+	background: rgba(206, 205, 202, 0.5);
+	border-radius: 3px;
+	margin-right: 0.5em;
+	margin-top: 0.3em;
+	margin-bottom: 0.3em;
+	white-space: nowrap;
+}
+
+.collection-title {
+	display: inline-block;
+	margin-right: 1em;
+}
+
+.page-description {
+    margin-bottom: 2em;
+}
+
+.simple-table {
+	margin-top: 1em;
+	font-size: 0.875rem;
+	empty-cells: show;
+}
+.simple-table td {
+	height: 29px;
+	min-width: 120px;
+}
+
+.simple-table th {
+	height: 29px;
+	min-width: 120px;
+}
+
+.simple-table-header-color {
+	background: rgb(247, 246, 243);
+	color: black;
+}
+.simple-table-header {
+	font-weight: 500;
+}
+
+time {
+	opacity: 0.5;
+}
+
+.icon {
+	display: inline-block;
+	max-width: 1.2em;
+	max-height: 1.2em;
+	text-decoration: none;
+	vertical-align: text-bottom;
+	margin-right: 0.5em;
+}
+
+img.icon {
+	border-radius: 3px;
+}
+
+.user-icon {
+	width: 1.5em;
+	height: 1.5em;
+	border-radius: 100%;
+	margin-right: 0.5rem;
+}
+
+.user-icon-inner {
+	font-size: 0.8em;
+}
+
+.text-icon {
+	border: 1px solid #000;
+	text-align: center;
+}
+
+.page-cover-image {
+	display: block;
+	object-fit: cover;
+	width: 100%;
+	max-height: 30vh;
+}
+
+.page-header-icon {
+	font-size: 3rem;
+	margin-bottom: 1rem;
+}
+
+.page-header-icon-with-cover {
+	margin-top: -0.72em;
+	margin-left: 0.07em;
+}
+
+.page-header-icon img {
+	border-radius: 3px;
+}
+
+.link-to-page {
+	margin: 1em 0;
+	padding: 0;
+	border: none;
+	font-weight: 500;
+}
+
+p > .user {
+	opacity: 0.5;
+}
+
+td > .user,
+td > time {
+	white-space: nowrap;
+}
+
+input[type="checkbox"] {
+	transform: scale(1.5);
+	margin-right: 0.6em;
+	vertical-align: middle;
+}
+
+p {
+	margin-top: 0.5em;
+	margin-bottom: 0.5em;
+}
+
+.image {
+	border: none;
+	margin: 1.5em 0;
+	padding: 0;
+	border-radius: 0;
+	text-align: center;
+}
+
+.code,
+code {
+	background: rgba(135, 131, 120, 0.15);
+	border-radius: 3px;
+	padding: 0.2em 0.4em;
+	border-radius: 3px;
+	font-size: 85%;
+	tab-size: 2;
+}
+
+code {
+	color: #eb5757;
+}
+
+.code {
+	padding: 1.5em 1em;
+}
+
+.code-wrap {
+	white-space: pre-wrap;
+	word-break: break-all;
+}
+
+.code > code {
+	background: none;
+	padding: 0;
+	font-size: 100%;
+	color: inherit;
+}
+
+blockquote {
+	font-size: 1.25em;
+	margin: 1em 0;
+	padding-left: 1em;
+	border-left: 3px solid rgb(55, 53, 47);
+}
+
+.bookmark {
+	text-decoration: none;
+	max-height: 8em;
+	padding: 0;
+	display: flex;
+	width: 100%;
+	align-items: stretch;
+}
+
+.bookmark-title {
+	font-size: 0.85em;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	height: 1.75em;
+	white-space: nowrap;
+}
+
+.bookmark-text {
+	display: flex;
+	flex-direction: column;
+}
+
+.bookmark-info {
+	flex: 4 1 180px;
+	padding: 12px 14px 14px;
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+}
+
+.bookmark-image {
+	width: 33%;
+	flex: 1 1 180px;
+	display: block;
+	position: relative;
+	object-fit: cover;
+	border-radius: 1px;
+}
+
+.bookmark-description {
+	color: rgba(55, 53, 47, 0.6);
+	font-size: 0.75em;
+	overflow: hidden;
+	max-height: 4.5em;
+	word-break: break-word;
+}
+
+.bookmark-href {
+	font-size: 0.75em;
+	margin-top: 0.25em;
+}
+
+.sans { font-family: ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol"; }
+.code { font-family: "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace; }
+.serif { font-family: Lyon-Text, Georgia, ui-serif, serif; }
+.mono { font-family: iawriter-mono, Nitti, Menlo, Courier, monospace; }
+.pdf .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK JP'; }
+.pdf:lang(zh-CN) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK SC'; }
+.pdf:lang(zh-TW) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK TC'; }
+.pdf:lang(ko-KR) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK KR'; }
+.pdf .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK JP'; }
+.pdf:lang(zh-CN) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC'; }
+.pdf:lang(zh-TW) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK TC'; }
+.pdf:lang(ko-KR) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK KR'; }
+.pdf .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK JP'; }
+.pdf:lang(zh-CN) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK SC'; }
+.pdf:lang(zh-TW) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK TC'; }
+.pdf:lang(ko-KR) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK KR'; }
+.pdf .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK JP'; }
+.pdf:lang(zh-CN) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC'; }
+.pdf:lang(zh-TW) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK TC'; }
+.pdf:lang(ko-KR) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK KR'; }
+.highlight-default {
+	color: rgba(55, 53, 47, 1);
+}
+.highlight-gray {
+	color: rgba(120, 119, 116, 1);
+	fill: rgba(120, 119, 116, 1);
+}
+.highlight-brown {
+	color: rgba(159, 107, 83, 1);
+	fill: rgba(159, 107, 83, 1);
+}
+.highlight-orange {
+	color: rgba(217, 115, 13, 1);
+	fill: rgba(217, 115, 13, 1);
+}
+.highlight-yellow {
+	color: rgba(203, 145, 47, 1);
+	fill: rgba(203, 145, 47, 1);
+}
+.highlight-teal {
+	color: rgba(68, 131, 97, 1);
+	fill: rgba(68, 131, 97, 1);
+}
+.highlight-blue {
+	color: rgba(51, 126, 169, 1);
+	fill: rgba(51, 126, 169, 1);
+}
+.highlight-purple {
+	color: rgba(144, 101, 176, 1);
+	fill: rgba(144, 101, 176, 1);
+}
+.highlight-pink {
+	color: rgba(193, 76, 138, 1);
+	fill: rgba(193, 76, 138, 1);
+}
+.highlight-red {
+	color: rgba(212, 76, 71, 1);
+	fill: rgba(212, 76, 71, 1);
+}
+.highlight-gray_background {
+	background: rgba(241, 241, 239, 1);
+}
+.highlight-brown_background {
+	background: rgba(244, 238, 238, 1);
+}
+.highlight-orange_background {
+	background: rgba(251, 236, 221, 1);
+}
+.highlight-yellow_background {
+	background: rgba(251, 243, 219, 1);
+}
+.highlight-teal_background {
+	background: rgba(237, 243, 236, 1);
+}
+.highlight-blue_background {
+	background: rgba(231, 243, 248, 1);
+}
+.highlight-purple_background {
+	background: rgba(244, 240, 247, 0.8);
+}
+.highlight-pink_background {
+	background: rgba(249, 238, 243, 0.8);
+}
+.highlight-red_background {
+	background: rgba(253, 235, 236, 1);
+}
+.block-color-default {
+	color: inherit;
+	fill: inherit;
+}
+.block-color-gray {
+	color: rgba(120, 119, 116, 1);
+	fill: rgba(120, 119, 116, 1);
+}
+.block-color-brown {
+	color: rgba(159, 107, 83, 1);
+	fill: rgba(159, 107, 83, 1);
+}
+.block-color-orange {
+	color: rgba(217, 115, 13, 1);
+	fill: rgba(217, 115, 13, 1);
+}
+.block-color-yellow {
+	color: rgba(203, 145, 47, 1);
+	fill: rgba(203, 145, 47, 1);
+}
+.block-color-teal {
+	color: rgba(68, 131, 97, 1);
+	fill: rgba(68, 131, 97, 1);
+}
+.block-color-blue {
+	color: rgba(51, 126, 169, 1);
+	fill: rgba(51, 126, 169, 1);
+}
+.block-color-purple {
+	color: rgba(144, 101, 176, 1);
+	fill: rgba(144, 101, 176, 1);
+}
+.block-color-pink {
+	color: rgba(193, 76, 138, 1);
+	fill: rgba(193, 76, 138, 1);
+}
+.block-color-red {
+	color: rgba(212, 76, 71, 1);
+	fill: rgba(212, 76, 71, 1);
+}
+.block-color-gray_background {
+	background: rgba(241, 241, 239, 1);
+}
+.block-color-brown_background {
+	background: rgba(244, 238, 238, 1);
+}
+.block-color-orange_background {
+	background: rgba(251, 236, 221, 1);
+}
+.block-color-yellow_background {
+	background: rgba(251, 243, 219, 1);
+}
+.block-color-teal_background {
+	background: rgba(237, 243, 236, 1);
+}
+.block-color-blue_background {
+	background: rgba(231, 243, 248, 1);
+}
+.block-color-purple_background {
+	background: rgba(244, 240, 247, 0.8);
+}
+.block-color-pink_background {
+	background: rgba(249, 238, 243, 0.8);
+}
+.block-color-red_background {
+	background: rgba(253, 235, 236, 1);
+}
+.select-value-color-uiBlue { background-color: rgba(35, 131, 226, .07); }
+.select-value-color-pink { background-color: rgba(245, 224, 233, 1); }
+.select-value-color-purple { background-color: rgba(232, 222, 238, 1); }
+.select-value-color-green { background-color: rgba(219, 237, 219, 1); }
+.select-value-color-gray { background-color: rgba(227, 226, 224, 1); }
+.select-value-color-translucentGray { background-color: rgba(255, 255, 255, 0.0375); }
+.select-value-color-orange { background-color: rgba(250, 222, 201, 1); }
+.select-value-color-brown { background-color: rgba(238, 224, 218, 1); }
+.select-value-color-red { background-color: rgba(255, 226, 221, 1); }
+.select-value-color-yellow { background-color: rgba(253, 236, 200, 1); }
+.select-value-color-blue { background-color: rgba(211, 229, 239, 1); }
+.select-value-color-pageGlass { background-color: undefined; }
+.select-value-color-washGlass { background-color: undefined; }
+
+.checkbox {
+	display: inline-flex;
+	vertical-align: text-bottom;
+	width: 16;
+	height: 16;
+	background-size: 16px;
+	margin-left: 2px;
+	margin-right: 5px;
+}
+
+.checkbox-on {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20width%3D%2216%22%20height%3D%2216%22%20fill%3D%22%2358A9D7%22%2F%3E%0A%3Cpath%20d%3D%22M6.71429%2012.2852L14%204.9995L12.7143%203.71436L6.71429%209.71378L3.28571%206.2831L2%207.57092L6.71429%2012.2852Z%22%20fill%3D%22white%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+
+.checkbox-off {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20x%3D%220.75%22%20y%3D%220.75%22%20width%3D%2214.5%22%20height%3D%2214.5%22%20fill%3D%22white%22%20stroke%3D%22%2336352F%22%20stroke-width%3D%221.5%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+	
+</style></head><body><article id="b31b87aa-3cdb-456a-bf7e-a093aaaee672" class="page sans"><header><h1 class="page-title">Quels outils utilisé pour traiter de la donnée source et apporter une plus value dessus ?</h1><p class="page-description"></p></header><div class="page-body"><figure id="e43d4a72-19b9-4088-9068-34edddcea316" class="image"><a href="Quels%20outils%20utilise%CC%81%20pour%20traiter%20de%20la%20donne%CC%81e%20s%20b31b87aa3cdb456abf7ea093aaaee672/Untitled.png"><img style="width:2728px" src="Quels%20outils%20utilise%CC%81%20pour%20traiter%20de%20la%20donne%CC%81e%20s%20b31b87aa3cdb456abf7ea093aaaee672/Untitled.png"/></a></figure><p id="f6fa1c93-1bac-4614-8a7c-9212c52e1808" class="">
+</p><h1 id="87942e9a-346e-49b5-8b37-e71cbc43aefe" class=""><strong>Intégration et Visualisation de Données Avancées: Créer des Pipelines de Données Stables avec BigQuery, DBT et Streamlit</strong></h1><p id="0b8dcab6-666b-4ce8-aebb-7588ae9d1f34" class="">
+</p><p id="8e8d7adf-cca8-4790-b75c-688871a39a04" class="">Dans l&#x27;univers foisonnant de la data science et de l&#x27;analyse de données, l&#x27;efficacité opérationnelle est souvent synonyme de la qualité des outils utilisés. Choisir la bonne combinaison peut transformer un océan de données brutes en informations précieuses et décisionnelles. Cet article explore la synergie entre BigQuery, la plateforme de data warehouse dans le cloud de Google, DBT (Data Build Tool) pour la transformation de données, et Streamlit, un outil puissant de création d&#x27;applications, pour mettre en place une pipeline de données robuste.</p><p id="c65d1fda-f5b9-4479-937f-a197c2f0c6ae" class="">
+</p><p id="f083e7c7-7a32-41db-8cec-1e78485a7232" class="">Les données sont le nouveau pétrole, mais elles doivent être raffinées pour être utiles. Dans cette analogie, BigQuery agit comme une raffinerie ultra-performante, capable de traiter des pétaoctets de données. Mais pour que ces données soient prêtes à l&#x27;emploi, elles doivent d&#x27;abord être correctement transformées. C&#x27;est ici que DBT entre en jeu, servant d&#x27;intermédiaire essentiel pour modéliser et tester les données de manière fiable avant de les déplacer vers leur destination finale.</p><p id="65966572-58d8-4457-8ae4-f249ee851809" class="">
+</p><p id="30db90df-964d-4432-8652-bb7d5dde0ee9" class="">L&#x27;image ci-dessous illustre un schéma de la structure de données initiale où des tables de staging (<code><strong>stg_</strong></code>) sont transformées en dimensions (<code><strong>dim_</strong></code>) et enfin intégrées dans des data marts (<code><strong>mart_</strong></code>). Ce schéma est un exemple classique des premières étapes de la modélisation d&#x27;un entrepôt de données, préparant le terrain pour des analyses plus poussées.</p><p id="a965fc6c-78fc-4a49-b0dd-d6cbec37d57c" class="">
+</p><p id="16500f7e-5ee1-4c75-bbbd-1938def1f9a6" class="">Une fois que les données ont été modélisées et testées avec DBT, elles sont prêtes à être exploitées. C&#x27;est là que Streamlit entre en scène, permettant aux data scientists et aux analystes de créer rapidement des dashboards interactifs. Ces dashboards transforment les données modélisées en visualisations claires et en insights actionnables pour les clients.</p><p id="53eefcbe-8ac9-49ab-b88f-bdd0fe0dba21" class="">
+</p><p id="188c8736-9bec-439a-95a1-f9b00572e9dd" class="">Le parcours de ces outils, de l&#x27;intégration à la visualisation, crée une pipeline de données capable de gérer et présenter l&#x27;information d&#x27;une manière qui non seulement informe le client mais l&#x27;habilite également à prendre des décisions éclairées.</p><p id="83fbd616-a097-4bc5-9efc-04432185d3fd" class="">
+</p><p id="4d130610-2776-427a-b02e-7e816435d1a1" class="">Dans les sections suivantes, nous plongerons dans chaque outil, en expliquant comment ils s&#x27;insèrent dans le pipeline et comment ils contribuent à créer un flux de travail de données à la fois stable et dynamique, finissant par une démonstration pratique de l&#x27;élaboration d&#x27;un dashboard client avec Streamlit, alimenté par les données organisées et transformées grâce à BigQuery et DBT.</p><p id="0e153352-2c2f-4c99-ac98-2d0b14217ef9" class="">
+</p><h1 id="6219575c-cc71-4165-b961-c35cf3ca3a79" class=""><strong>BigQuery : Premier Maillon d&#x27;une Chaîne Analytique Puissante</strong></h1><p id="e1b4ebaf-e32b-4aa3-a90e-fa36b702fd7b" class="">
+</p><p id="f5d48387-827a-47f3-9a1f-41c0c1f933cd" class="">Lorsque l&#x27;on aborde la construction d&#x27;une pipeline de données, le choix de la plateforme de data warehouse est crucial. BigQuery, avec son infrastructure sans serveur et sa capacité à analyser des téraoctets en quelques secondes, se présente comme une solution incontournable. Pour illustrer son potentiel, nous l&#x27;utiliserons dans un contexte d&#x27;apprentissage grâce à un compte gratuit, bénéficiant de 300 euros de crédits, suffisants pour environ trois ans et demi d&#x27;usage modéré, à raison d&#x27;environ 1 centime d&#x27;euro par heure. Une opportunité parfaite pour se lancer sans contrainte financière.</p><p id="8868a0da-5db3-4594-a6e3-0c2d1167e9a0" class="">
+</p><p id="a0f66bfa-edc5-4596-979a-4110c82af2bf" class="">Pour notre démonstration, nous exploitons un jeu de données publiquement disponible sur Kaggle, spécifiquement conçu pour simuler une situation réelle : <a href="https://www.kaggle.com/datasets/yasinnaal/bikes-sales-sample-data">Bikes Sales Sample Data</a>.</p><figure id="78053333-8d9c-4afa-b348-56319ba8441d" class="image"><a href="Quels%20outils%20utilise%CC%81%20pour%20traiter%20de%20la%20donne%CC%81e%20s%20b31b87aa3cdb456abf7ea093aaaee672/Untitled%201.png"><img style="width:2136px" src="Quels%20outils%20utilise%CC%81%20pour%20traiter%20de%20la%20donne%CC%81e%20s%20b31b87aa3cdb456abf7ea093aaaee672/Untitled%201.png"/></a></figure><p id="ff8ff296-ff0e-4c0d-99a2-a390b094945f" class="">Ce choix didactique n&#x27;exclut en rien la possibilité d&#x27;adapter la méthode à des données clients réelles, en respectant évidemment les normes de confidentialité et de sécurité.</p><p id="f5d9f898-a83d-4bbf-a42e-3907aba6a57a" class="">
+</p><p id="b8a141b1-f89b-49d0-a5ca-1dfe9d744625" class="">Les données que nous traitons sont au format CSV, un standard de l&#x27;industrie pour la simplicité de sa structure et sa compatibilité universelle. Bien que BigQuery soit flexible quant aux formats de données, le CSV reste un choix pratique pour sa facilité d&#x27;importation et sa large adoption. Dans le cadre d&#x27;autres formats, seules les modalités d&#x27;importation varient, sans affecter l&#x27;intégrité de notre processus.</p><p id="5153a75c-0b1d-4de1-a97f-8ab30ba4e3ae" class="">
+</p><p id="832e893e-2c22-4864-80a9-aac0bbf049a6" class="">Concrètement, nous avons initié un projet BigQuery nommé <code>bike-shop</code>. Au sein de ce projet, un dataset <code><strong>RAW_CLIENT_BIKE_SHOP</strong></code> a été créé, le préfixe <code>RAW</code> indiquant que les données y sont dans leur forme originelle, prêtes à être transformées. <code>CLIENT</code> suggère notre approche orientée client, où chaque dataset est une représentation fidèle des informations spécifiques à chaque client, facilitant la gestion de multiples datasets dans des pipelines distincts.</p><figure id="fbf99610-d6ce-415c-8b0d-6d1eafe944b5" class="image"><a href="Quels%20outils%20utilise%CC%81%20pour%20traiter%20de%20la%20donne%CC%81e%20s%20b31b87aa3cdb456abf7ea093aaaee672/Untitled%202.png"><img style="width:2464px" src="Quels%20outils%20utilise%CC%81%20pour%20traiter%20de%20la%20donne%CC%81e%20s%20b31b87aa3cdb456abf7ea093aaaee672/Untitled%202.png"/></a></figure><p id="09ee4164-e7e9-4fa5-b8cc-aa52c1ce1c32" class="">
+</p><p id="ead3f9ec-f1b2-43cc-a142-5c13664efa52" class="">La phase d&#x27;importation des données est minutieuse : chaque fichier <code>CSV</code> est chargé dans BigQuery avec une attention particulière portée au nommage des tables, à la définition correcte des types de données pour chaque colonne, et à l&#x27;ajustement précis des en-têtes. Cette étape est fondamentale pour assurer l&#x27;intégrité des données avant de procéder à leur transformation.</p><figure id="57a918a0-518b-440e-8596-2bd28195044c" class="image"><a href="Quels%20outils%20utilise%CC%81%20pour%20traiter%20de%20la%20donne%CC%81e%20s%20b31b87aa3cdb456abf7ea093aaaee672/Untitled%203.png"><img style="width:2546px" src="Quels%20outils%20utilise%CC%81%20pour%20traiter%20de%20la%20donne%CC%81e%20s%20b31b87aa3cdb456abf7ea093aaaee672/Untitled%203.png"/></a></figure><p id="2a18de8f-a6ab-4dcb-a3f9-04e950f4acf5" class="">
+</p><p id="29416ffb-1263-4e74-bd21-dde240d4aeb6" class="">A travers cet exemple, BigQuery ne se contente pas d&#x27;être un simple réceptacle de données brutes, mais se révèle être le point de départ d&#x27;une aventure analytique, prélude à la transformation et à la visualisation des données, et témoigne de la puissance d&#x27;une infrastructure de données bien conçue.</p><h1 id="f75d4598-49e1-4d0d-a56e-bc22b0b583d9" class=""><strong>DBT : Articuler et Transformer les Données pour la Performance Analytique</strong></h1><p id="54c41036-c80a-43f2-bf31-3ffcfd2b9068" class="">
+</p><p id="5cb6d914-e136-4b91-bfef-89b8f00e33bb" class="">L&#x27;articulation des données est essentielle pour débloquer des insights précis et performants. DBT (Data Build Tool) joue un rôle de premier plan dans ce processus en transformant et en modélisant les données de BigQuery afin de les rendre prêtes pour l&#x27;analyse. Pour que DBT et BigQuery puissent dialoguer efficacement, une étape de configuration initiale est nécessaire, à savoir la mise en place d&#x27;un fichier de compte de service (service account).</p><h2 id="8c7b29cc-4ddf-4be3-9535-2dda058e5427" class=""><strong>Configurer l&#x27;Interaction entre DBT et BigQuery</strong></h2><p id="d9dae761-5f2a-4955-95e0-ecf4e347a934" class="">
+</p><div id="e2af62e4-f4bd-44a5-93bb-0e670ae389a6" class="column-list"><div id="a8294ca8-57f5-48b6-bb8e-c849283620b1" style="width:50.000000000000014%" class="column"><p id="61858ca2-2972-4a0f-af01-49dbcb4a3137" class="">La configuration commence par la création d&#x27;un nouveau compte de service dans BigQuery. Attribuez-lui un rôle adéquat comme <code>editor</code> ou bien si vous le souhaitez <code>owner</code> . </p><p id="b9305104-9a9d-472c-8d08-e444df635665" class="">(Des permissions plus restrictives comme data editor soient recommandées pour des environnements de production.) </p><p id="7dd9ca09-249c-4579-8f0d-122edb140cc3" class="">
+</p><p id="5011d0a7-e7b8-43cf-a325-de4c21b09280" class="">
+</p><p id="482e444e-a9fe-4fc3-8e13-984ac5a78e5a" class="">Une fois le compte de service créé, générez une clé privée au format JSON. Cette clé est la porte d&#x27;accès à vos ressources BigQuery, donc sa sécurité est primordiale. Elle doit être stockée en lieu sûr, à l&#x27;abri des regards indiscrets et surtout, loin des dépôts publics.</p></div><div id="6cf5c417-eb12-4880-87d7-92fa2341d9e1" style="width:50%" class="column"><figure id="f58abefc-f2bc-4fb6-9ccd-52c9db036e8a" class="image"><a href="Quels%20outils%20utilise%CC%81%20pour%20traiter%20de%20la%20donne%CC%81e%20s%20b31b87aa3cdb456abf7ea093aaaee672/Untitled%204.png"><img style="width:1122px" src="Quels%20outils%20utilise%CC%81%20pour%20traiter%20de%20la%20donne%CC%81e%20s%20b31b87aa3cdb456abf7ea093aaaee672/Untitled%204.png"/></a></figure></div></div><figure id="6bbda9a8-775d-493d-aed1-803620f883da" class="image"><a href="Quels%20outils%20utilise%CC%81%20pour%20traiter%20de%20la%20donne%CC%81e%20s%20b31b87aa3cdb456abf7ea093aaaee672/Untitled%205.png"><img style="width:3280px" src="Quels%20outils%20utilise%CC%81%20pour%20traiter%20de%20la%20donne%CC%81e%20s%20b31b87aa3cdb456abf7ea093aaaee672/Untitled%205.png"/></a></figure><h3 id="c654ef32-c5d4-4c97-a7ea-e1c3c8524555" class=""><strong>Initialisation du Projet DBT</strong></h3><p id="60738d64-19ec-4d55-a129-1970fd69bab0" class="">Avec la clé en main, l&#x27;étape suivante se déroule dans le terminal de votre ordinateur :</p><ol type="1" id="95ac7da0-dc9b-49eb-acd2-96bf749761b9" class="numbered-list" start="1"><li>Installez DBT spécifique à BigQuery avec la commande <code><strong>pip install dbt-bigquery</strong></code>. Cette commande peut varier si vous utilisez un autre fournisseur cloud comme PostgreSQL ou Snowflake.</li></ol><ol type="1" id="e88ea983-959d-471f-8659-28b69eb761d6" class="numbered-list" start="2"><li>Lancez l&#x27;initialisation de votre projet DBT en tapant <code><strong>dbt init</strong></code>. Lorsque le système vous le demandera, nommez votre projet - dans notre cas, <code><strong>dbt_bigquery_bike_shop</strong></code> semble approprié.</li></ol><ol type="1" id="fbdead70-3bba-4d30-a019-9b912f84c181" class="numbered-list" start="3"><li>Le système vous demandera ensuite de sélectionner la base de données parmi celles disponibles et d&#x27;indiquer le chemin vers le fichier de credentials du compte de service.</li></ol><figure id="f960a9ab-8678-4110-9cd1-f5b0f41e3783" class="image"><a href="Quels%20outils%20utilise%CC%81%20pour%20traiter%20de%20la%20donne%CC%81e%20s%20b31b87aa3cdb456abf7ea093aaaee672/Untitled%206.png"><img style="width:1370px" src="Quels%20outils%20utilise%CC%81%20pour%20traiter%20de%20la%20donne%CC%81e%20s%20b31b87aa3cdb456abf7ea093aaaee672/Untitled%206.png"/></a></figure><p id="207b317f-aad9-4668-9fcd-86c666affd78" class="">Après ces étapes, votre projet DBT est prêt. Un template de projet est automatiquement généré, offrant un guide pratique pour démarrer. Ce cadre initial fournit une structure claire pour commencer à travailler sur les modèles de données, les tests et la documentation, des composants essentiels pour une pipeline de données robuste et fiable.</p><p id="b9a235dd-de9a-4743-a478-a10757169216" class="">
+</p><h2 id="8bb239fb-f9a9-4060-b1f2-91b40b612884" class=""><strong>DBT: Structurer et Transformer les Données avec Précision</strong></h2><p id="935da8c7-2dec-49b7-9af5-f441a0823dfb" class="">DBT est un outil de transformation de données qui révolutionne la manière dont les data engineers et les analystes construisent et maintiennent leurs pipelines de données. Grâce à un mélange de fichiers SQL pour les transformations et de fichiers YAML pour la configuration, DBT fournit un cadre rigoureux pour la modélisation des données. Dans ce segment, nous allons explorer un cas d&#x27;utilisation classique dans DBT, en nous appuyant sur un projet structuré en différentes catégories de modèles.</p><h3 id="17748d47-80d9-44d1-abba-5d46c6f89c9a" class=""><strong>Le Fichier dbt_project.yml</strong></h3><p id="c165b1e5-8945-4b77-ab98-d38f80d5c5d9" class="">Au cœur de tout projet DBT se trouve le fichier <code><strong>dbt_project.yml</strong></code>, créé lors de l&#x27;initialisation avec <code><strong>dbt init</strong></code>. Ce fichier constitue le manifeste de votre projet, décrivant sa structure et ses configurations. Pour notre cas d&#x27;usage, nous ajustons ce fichier pour l&#x27;adapter précisément à nos besoins, en le modifiant légèrement pour refléter notre structure cible.</p><p id="e4b50d24-ea38-47b4-9de5-0f479a379a2b" class="">Voici un exemple de configuration de base pour notre projet :</p><div id="40751edf-7213-43ac-88e1-a32e9ed614a9" class="column-list"><div id="d8f5989d-f589-4e8a-b16f-86728e7c6021" style="width:50%" class="column"><figure id="3d88a376-f79d-43bb-ad45-117f4137e970" class="image"><a href="Quels%20outils%20utilise%CC%81%20pour%20traiter%20de%20la%20donne%CC%81e%20s%20b31b87aa3cdb456abf7ea093aaaee672/Untitled%207.png"><img style="width:514px" src="Quels%20outils%20utilise%CC%81%20pour%20traiter%20de%20la%20donne%CC%81e%20s%20b31b87aa3cdb456abf7ea093aaaee672/Untitled%207.png"/></a></figure></div><div id="f0ee5662-fa09-43eb-af8c-c71aef358de0" style="width:50%" class="column"><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="731ef4c7-219e-41b0-b423-e85cf6066fa8" class="code"><code class="language-JavaScript">name: &#x27;dbt_bigquery_bike_shop&#x27;
+version: &#x27;1.0.0&#x27;
+config-version: 2
+
+profile: &#x27;dbt_bigquery_bike_shop&#x27;
+
+model-paths: [&quot;models&quot;]
+macro-paths: [&quot;macros&quot;]
+
+clean-targets:
+  - &quot;target&quot;
+  - &quot;dbt_packages&quot;
+
+models:
+  dbt_bigquery_bike_shop:
+    stage:
+      +materialized: table
+    dimension:
+      +materialized: table
+    activity:
+      +materialized: table
+    marts:
+      +materialized: table</code></pre><p id="4f27a7e0-5b34-442f-98c4-7f5639ec5d32" class="">Sur la gauche, voici la structure de notre projet <code><strong>dbt_bigquery_bike_shop</strong></code></p><p id="1d2add64-e061-48a5-92fa-ebdc652ca56b" class="">
+</p></div></div><p id="7c14661e-9387-466c-8b1b-3ccb8b2a08c0" class="">
+</p><h3 id="35b2d678-9f5b-433b-8998-b25dc46918a1" class=""><strong>Structuration des Modèles DBT</strong></h3><p id="3a6ce569-f31a-4a11-8a3b-a1c047ce5494" class="">Les modèles dans DBT sont organisés en catégories, chacune représentant une étape spécifique de la transformation des données. Pour notre projet <code><strong>dbt_bigquery_bike_shop</strong></code>, nous définissons trois catégories principales, chacune placée dans son propre dossier :</p><ol type="1" id="ea4e1130-7037-483c-bc31-9647247ed6b9" class="numbered-list" start="1"><li><strong>Staging</strong>: Les modèles de staging représentent la première couche de transformation où les données brutes sont légèrement modifiées. Ici, nous réalisons des opérations de base comme renommer <code><strong>productid</strong></code> en <code><strong>product_id</strong></code> ou filtrer les lignes incomplètes. L&#x27;objectif est de préparer les données sans en altérer la structure fondamentale. Chaque table source a son modèle de staging correspondant.<p id="783a48b0-ee7b-435b-9a21-5f6b6a87108b" class="">Voici un exemple de table de staging <strong><code>stg_adresses.sql</code></strong></p><p id="fd552c87-e86f-462f-874e-65aa1930679f" class="">Comme on le constate on a des transformation basique :</p><ul id="d168bedf-c4e6-4c6e-b09b-34aad23b20c8" class="bulleted-list"><li style="list-style-type:disc">re-nommage de variable</li></ul><ul id="74afaf41-f5cd-4d27-bb24-e2a91b640ca9" class="bulleted-list"><li style="list-style-type:disc">transformation des formats de date</li></ul><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="8ad75672-e192-46e2-be63-3826a24f2022" class="code"><code class="language-SQL">select
+    addressid as address_id,
+    city,
+    postalcode as postal_code,
+    street,
+    building,
+    country,
+    region,
+    addresstype as address_type,
+    parse_date(&#x27;%Y%m%d&#x27;, cast(validity_startdate as string)) AS validity_start_date,
+    parse_date(&#x27;%Y%m%d&#x27;, cast(validity_enddate as string)) AS validity_end_date,
+    latitude,
+    longitude
+from RAW_CLIENT_BIKE_SHOP.adresses</code></pre></li></ol><ol type="1" id="7f80182b-1440-403a-b1f4-4bed64591882" class="numbered-list" start="2"><li><strong>Dimension et Activité</strong>: Cette catégorie distingue deux types de tables :<ul id="3ffa8615-537a-417a-b6ad-9b2fc8a18fab" class="bulleted-list"><li style="list-style-type:disc"><strong>Les tables de dimension</strong> agissent comme des référentiels ou dictionnaires, tels qu&#x27;une liste de clients ou d&#x27;employés. Elles évoluent avec le temps mais pas de manière fréquente.</li></ul><ul id="be4e9a26-fd70-4326-a1c4-4e45831f939f" class="bulleted-list"><li style="list-style-type:disc"><strong>Les tables d&#x27;activité</strong> enregistrent les transactions ou événements, comme les ventes ou la gestion de l&#x27;inventaire.</li></ul><p id="672ddccf-ad08-4b0e-832f-9a5a2fa8a4e2" class="">Pour ces modèles, nous sélectionnons et transformons les données issues du staging, en conservant uniquement les éléments pertinents pour construire des références significatives et des historiques d&#x27;activités.</p><p id="3ff307f4-9002-498d-8990-d6abb9af1b17" class="">Voici un exemple de table de dimension <strong><code>dim_product.sql</code></strong><strong>.</strong></p><p id="468c8107-0f46-4b9e-8532-d409b3d6597a" class="">Dans cette table on va joindre trois tables de staging à l’aide d’une des principales fonctions de DBT : <strong><code>{{ ref() }}</code></strong>. On va pouvoir créer un lien vers une table précédente.</p><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="2b841561-7209-4d45-9e52-1dbba853064e" class="code"><code class="language-SQL">with
+products as (
+    select
+        product_id,
+        product_category_id,
+        partner_id,
+        type_code,
+        currency,
+        created_at,
+        created_by,
+        weight_measure,
+        weight_unit,
+        price,
+
+    from {{ ref(&#x27;stg_products&#x27;) }}
+),
+
+product_text as (
+    select
+        product_id,
+        any_value(short_description) as product_description
+    from {{ ref(&#x27;stg_product_texts&#x27;) }}
+    group by product_id
+),
+
+product_category as (
+    select
+        product_category_id,
+        any_value(short_description) as category_description
+    from {{ ref(&#x27;stg_product_category_text&#x27;) }}
+    group by product_category_id
+)
+
+select 
+    -- ids
+    p.product_id,
+    p.product_category_id,
+    p.partner_id,
+    p.created_by as employee_id,
+
+    -- dimension
+    pt.product_description,
+    pc.category_description,
+    p.type_code,
+    p.currency,
+
+    -- mesures / metrics
+    p.weight_measure,
+    p.weight_unit,
+    p.price,
+
+    -- date
+    p.created_at
+
+from products p
+left join product_text pt on p.product_id = pt.product_id
+left join product_category pc on p.product_category_id = pc.product_category_id</code></pre></li></ol><ol type="1" id="34f3c3d5-0a62-4d0f-900e-a3a39938883e" class="numbered-list" start="3"><li><strong>Tables Marts</strong>: Ces modèles représentent la destination finale des données transformées. Elles sont le produit de la combinaison des tables de dimension et d&#x27;activité et doivent fournir une vue intégrée et cohérente des données. Ces tables sont conçues pour être les seules visibles par les clients et sont celles utilisées dans les applications et visualisations.<p id="8f2dd0b5-113e-4b13-89d4-7764edcb895f" class="">Enfin voici un exemple de table mart : <strong><code>mart_sales_orders.sql</code></strong><strong>.</strong></p><p id="34a9520d-b97f-4dd7-8714-2d7080a12913" class="">Cette table met bout à bout plusieurs table de dimension et d’activité pour créer une table finale qu’on utilisera dans notre application de visualisation.</p><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="246e7704-bf70-40b0-b2a8-1adcf5d926da" class="code"><code class="language-SQL">with
+sales_order as (
+    select
+        sales_order_id,
+        partner_id,
+        employee_id,
+
+        billing_status,
+        delivery_status,
+        case 
+            when delivery_status = &#x27;Completed&#x27; then delivery_date
+            else null
+        end as delivery_date,
+        sales_order_date,
+
+        order_gross_amount,
+        order_net_amount,
+        (order_gross_amount / order_net_amount) * 100 as order_tax_rate,
+
+        case
+            when billing_status = &#x27;Completed&#x27; then order_gross_amount
+            else 0
+        end as billing_gross_amount,
+
+        case
+            when billing_status = &#x27;Completed&#x27; then order_net_amount
+            else 0
+        end as billing_net_amount,
+
+    from {{ ref(&#x27;activity_sales_orders&#x27;) }}
+),
+
+business_partner as (
+    select
+        partner_id,
+        address_id,
+
+        company_name,
+        legal_form
+    from {{ ref(&#x27;dim_business_partners&#x27;) }}
+),
+
+employee as (
+    select
+        employee_id,
+        employee_name
+    from {{ ref(&#x27;dim_employees&#x27;) }}
+),
+
+adresses as (
+    select
+        address_id,
+        country,
+        city
+    from {{ ref(&#x27;dim_adresses&#x27;) }}
+)
+
+select
+    so.sales_order_date,
+
+    bp.company_name,
+    bp.legal_form,
+    a.country,
+    a.city,
+
+    e.employee_name,
+
+    so.billing_status,
+    so.delivery_status,
+    so.delivery_date,
+
+    so.order_gross_amount,
+    so.order_net_amount,
+    so.order_tax_rate,
+    so.billing_gross_amount,
+    so.billing_net_amount,
+    so.sales_order_id as order_number
+from sales_order so
+left join business_partner bp on so.partner_id = bp.partner_id
+left join adresses a on bp.address_id = a.address_id
+left join employee e on so.employee_id = e.employee_id
+order by so.sales_order_date</code></pre><p id="60ad9456-d6c4-4f6b-af64-6cc8da46e2f7" class="">
+</p><h2 id="58fdb701-f533-4665-a75d-a0c4abbb053a" class=""><strong>Les Tests dans DBT: Garants de la Qualité des Données</strong></h2><p id="a235363e-3f44-448c-ae64-3c60928e51c6" class="">Les tests sont un aspect fondamental de toute pipeline de données. Dans DBT, ils servent à valider que les données se conforment aux attentes et aux spécifications de modélisation. Les fichiers de test, souvent définis en YAML, permettent de spécifier des contrôles de qualité qui seront appliqués aux différentes colonnes des modèles de données.</p><h3 id="6b781b59-74ce-47f2-8480-fe561bfcd554" class=""><strong>Tests de Colonne</strong></h3><p id="82e536d0-24e5-46b1-9b19-275201b6d2bd" class="">Dans l&#x27;exemple de fichier de test fourni, on définit des tests pour les modèles <code><strong>mart_product_sales</strong></code> et <code><strong>mart_sales_orders</strong></code>. Chaque test est associé à une colonne spécifique et vérifie des conditions précises :</p><ul id="4eab0c97-e368-47bc-bf78-9f378b33053e" class="bulleted-list"><li style="list-style-type:disc"><code><strong>not_null</strong></code> s&#x27;assure qu&#x27;aucune valeur nulle n&#x27;est présente dans la colonne, une condition critique pour les champs qui sont censés contenir des données à chaque enregistrement.</li></ul><ul id="bc8df0fe-1478-4132-b80b-31cdca5578da" class="bulleted-list"><li style="list-style-type:disc"><code><strong>unique</strong></code> garantit que chaque valeur dans la colonne est unique, ce qui est essentiel pour les identifiants de commande ou de produit, par exemple.</li></ul><ul id="6e2574fb-0034-443e-af85-da8f16534a51" class="bulleted-list"><li style="list-style-type:disc"><code><strong>accepted_values</strong></code> vérifie que la colonne contient uniquement un ensemble spécifié de valeurs, ce qui est utile pour les colonnes avec un ensemble restreint de statuts possibles, comme <code><strong>billing_status</strong></code> ou <code><strong>delivery_status</strong></code>.</li></ul><p id="0b6fbcc7-0e13-4dbf-b358-5069c28d10d4" class="">Ces tests augmentent la fiabilité des données en garantissant leur intégrité et leur précision avant qu&#x27;elles ne soient utilisées pour l&#x27;analyse ou la visualisation.</p><p id="54554a8f-f991-46d2-a658-627a93701e99" class="">Voici un exemple de fichier de tests, ces tests seront exécuté lors de l’appel à la commande <strong><code>dbt build</code></strong> </p><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="40f0602f-a3cc-4d72-92f2-151b194ae35f" class="code"><code class="language-SQL">version: 2
+
+models:
+  - name: mart_product_sales
+    description: List of every product sold
+    columns:
+      - name: sales_order_date
+        tests:
+          - not_null
+      - name: product_name
+        tests:
+          - not_null
+      - name: company_name
+        tests:
+          - not_null
+      - name: billing_status
+        tests:
+          - not_null
+          - accepted_values:
+              values: [&#x27;Completed&#x27;, &#x27;Incomplete&#x27;, &#x27;Unknown&#x27;]
+      - name: delivery_status
+        tests:
+          - not_null
+          - accepted_values:
+              values: [&#x27;Completed&#x27;, &#x27;Incomplete&#x27;, &#x27;Unknown&#x27;]
+      - name: quantity
+        tests:
+          - not_null
+      - name: product_price
+        tests:
+          - not_null
+      - name: weight_measure
+        tests:
+          - not_null
+      - name: total_gross_amount
+        tests:
+          - not_null
+      - name: order_number
+        tests:
+          - not_null
+          - unique
+
+
+
+  - name: mart_sales_orders
+    description: List of every sales order
+    columns:
+      - name: sales_order_date
+        tests:
+          - not_null
+      - name: company_name
+        tests:
+          - not_null
+      - name: country
+        tests:
+          - not_null
+      - name: city
+        tests:
+          - not_null
+      - name: employee_name
+        tests:
+          - not_null
+      - name: delivery_status
+        tests:
+          - not_null
+          - accepted_values:
+              values: [&#x27;Completed&#x27;, &#x27;Incomplete&#x27;, &#x27;Unknown&#x27;]
+      - name: billing_status
+        tests:
+          - not_null
+          - accepted_values:
+              values: [&#x27;Completed&#x27;, &#x27;Incomplete&#x27;, &#x27;Unknown&#x27;]
+      - name: order_gross_amount
+        tests:
+          - not_null
+      - name: order_number
+        tests:
+          - not_null
+          - unique</code></pre><h3 id="9931d047-6811-436a-9561-dc406802a97d" class=""><strong>Commande DBT </strong><code><strong>build</strong></code></h3><p id="ba50c23b-8442-4e4a-a6dc-f199a635147e" class="">La commande <code><strong>dbt build</strong></code> est une commande centralisée qui exécute les modèles et les tests dans l&#x27;ordre correct, en fonction de leurs dépendances. L&#x27;exécution linéaire de <code><strong>dbt build</strong></code> garantit que les données sont transformées, testées et chargées de manière séquentielle pour maintenir la cohérence de la pipeline de données. Cette commande est idéale pour une exécution complète du projet DBT, car elle suit la chaîne de dépendances construite à travers les références (<code><strong>ref()</strong></code>) entre les modèles.</p><figure id="6222a122-9a89-4f23-b544-462412659f95" class="image"><a href="Quels%20outils%20utilise%CC%81%20pour%20traiter%20de%20la%20donne%CC%81e%20s%20b31b87aa3cdb456abf7ea093aaaee672/Untitled%208.png"><img style="width:672px" src="Quels%20outils%20utilise%CC%81%20pour%20traiter%20de%20la%20donne%CC%81e%20s%20b31b87aa3cdb456abf7ea093aaaee672/Untitled%208.png"/></a></figure><p id="29521691-57fe-43e3-86c2-31ce61dd1b3e" class="">Voici un exemple de <strong>build</strong>, ici les tables sont généré, puis les tests sont exécutés. Cela permet de vérifier si la structures des données source ont changé et on conduit à une modification dans la suite de la pipeline. On bien si par exemple une mauvaise jointure à entrainer une modification du nombre de ligne sur une table etc…</p><h3 id="92a5abc3-c004-4115-b2eb-0899aab8d508" class=""><strong>Documentation</strong></h3><p id="ac9b1c64-5d35-412c-ab62-ef8037a11808" class="">La documentation est une autre pierre angulaire de DBT. Elle permet à quiconque d&#x27;accéder et de comprendre la logique des transformations de données. DBT génère une documentation web basée sur le contenu des fichiers projet et les commentaires dans les modèles SQL. Cette documentation est interactive et permet de visualiser non seulement la structure et la description des modèles, mais aussi la lignée des données et les tests associés. Elle peut être générée à l&#x27;aide de la commande <code><strong>dbt docs generate</strong></code> et visualisée avec <code><strong>dbt docs serve</strong></code>.</p><p id="93f3027f-dbe5-4e7c-8a0f-a26d84d326c1" class="">La pratique de documentation continue dans DBT aide les équipes à rester alignées sur les modifications apportées aux modèles et assure une compréhension claire du flux des données pour tous les intervenants.</p><figure id="04ad6cca-0484-406f-84bc-641ee3f29543" class="image"><a href="Quels%20outils%20utilise%CC%81%20pour%20traiter%20de%20la%20donne%CC%81e%20s%20b31b87aa3cdb456abf7ea093aaaee672/Untitled%209.png"><img style="width:2614px" src="Quels%20outils%20utilise%CC%81%20pour%20traiter%20de%20la%20donne%CC%81e%20s%20b31b87aa3cdb456abf7ea093aaaee672/Untitled%209.png"/></a></figure><figure id="04eb4cc3-7934-46b1-aa2d-b0fd5dbc4253" class="image"><a href="Quels%20outils%20utilise%CC%81%20pour%20traiter%20de%20la%20donne%CC%81e%20s%20b31b87aa3cdb456abf7ea093aaaee672/Untitled%2010.png"><img style="width:5212px" src="Quels%20outils%20utilise%CC%81%20pour%20traiter%20de%20la%20donne%CC%81e%20s%20b31b87aa3cdb456abf7ea093aaaee672/Untitled%2010.png"/></a></figure><p id="307887d6-8c25-471c-bf3e-e8a996afa569" class="">
+</p><h2 id="b31ca327-01e7-49bb-82c6-46ee7694b76e" class=""><strong>Intégration des Modèles DBT dans BigQuery : Le Dataset</strong></h2><p id="0747269d-a34e-4615-a827-d26437a0cb1e" class="">Après la création et le test des modèles de données dans DBT, l&#x27;étape suivante consiste à matérialiser ces modèles dans BigQuery. Pour notre projet <code><strong>dbt_bigquery_bike_shop</strong></code>, nous avons choisi de les regrouper dans un dataset spécifiquement dédié au développement : <code><strong>dev_dbt_client_bike_shop</strong></code>. Ce dataset est le réceptacle des modèles générés à travers les différentes étapes de notre pipeline DBT.</p><h3 id="6a246d4a-399c-4ac4-b3c8-96abca7bc8cb" class=""><strong>Matérialisation des Modèles</strong></h3><p id="38f4d2d5-4dfe-464a-9e72-45742665ca67" class="">Chaque modèle DBT - que ce soit un modèle de staging, de dimension, d&#x27;activité ou un mart - est configuré pour être matérialisé sous forme de table dans BigQuery. La configuration définie dans le fichier <code><strong>dbt_project.yml</strong></code> spécifie que tous ces modèles doivent être matérialisés comme des tables, ce qui signifie que DBT va exécuter les scripts SQL et créer des tables physiques dans BigQuery.</p><figure id="3c14fc47-e559-474b-85b5-addcf29912a0" class="image"><a href="Quels%20outils%20utilise%CC%81%20pour%20traiter%20de%20la%20donne%CC%81e%20s%20b31b87aa3cdb456abf7ea093aaaee672/Untitled%2011.png"><img style="width:1910px" src="Quels%20outils%20utilise%CC%81%20pour%20traiter%20de%20la%20donne%CC%81e%20s%20b31b87aa3cdb456abf7ea093aaaee672/Untitled%2011.png"/></a></figure><h1 id="79ccb26d-69aa-4ea5-80b7-591df473106c" class=""><strong>Streamlit: Visualisation et Interactivité au Service des Données</strong></h1><p id="3f2a2684-5863-4845-8263-59260f7903fb" class="">Streamlit est un framework open-source qui permet de créer rapidement des applications de visualisation de données. Il s&#x27;intègre parfaitement dans notre pipeline de données en tant qu&#x27;outil final, servant à présenter les données transformées et modélisées dans une forme interactive et visuellement engageante. Les pages de l&#x27;application Streamlit montrent comment les données issues de BigQuery peuvent être exploitées pour fournir des insights métier.</p><h3 id="c17d381d-e905-4de3-9c3b-2045fb0c827f" class=""><strong>Première Page: Vue d&#x27;Ensemble des Commandes</strong></h3><p id="9e9ff6da-87c4-4763-b2e2-38a6665591d5" class="">La première page affiche une série de graphiques détaillant les commandes par mois, les informations de facturation, et une répartition par pays et entreprise. Les utilisateurs peuvent filtrer les données en fonction de diverses dimensions telles que l&#x27;entreprise, le pays, la ville, et le statut de livraison ou de facturation. Cela permet aux décideurs d&#x27;obtenir rapidement une vue d&#x27;ensemble de la performance de l&#x27;entreprise sur divers critères.</p><figure id="97dd1fa4-350d-4cb1-9302-41edd8815b59" class="image"><a href="Quels%20outils%20utilise%CC%81%20pour%20traiter%20de%20la%20donne%CC%81e%20s%20b31b87aa3cdb456abf7ea093aaaee672/Untitled%2012.png"><img style="width:5916px" src="Quels%20outils%20utilise%CC%81%20pour%20traiter%20de%20la%20donne%CC%81e%20s%20b31b87aa3cdb456abf7ea093aaaee672/Untitled%2012.png"/></a></figure><h3 id="613791b8-5bbe-4970-ac27-dab0cf392113" class=""><strong>Deuxième Page: Tableau de Bord des Produits</strong></h3><p id="7a243b29-7ce0-4811-9355-e020fb1244bc" class="">Sur la deuxième page, nous avons un aperçu détaillé des ventes de produits. Elle montre non seulement le volume total des ventes par produit mais aussi une ventilation par catégorie et par entreprise. Cela offre une analyse plus approfondie qui peut aider à identifier les tendances de vente pour des catégories de produits spécifiques ou la performance de produits individuels à travers différentes entreprises.</p><figure id="17daff15-ffb6-4e81-94a3-55b78541a9b1" class="image"><a href="Quels%20outils%20utilise%CC%81%20pour%20traiter%20de%20la%20donne%CC%81e%20s%20b31b87aa3cdb456abf7ea093aaaee672/Untitled%2013.png"><img style="width:5952px" src="Quels%20outils%20utilise%CC%81%20pour%20traiter%20de%20la%20donne%CC%81e%20s%20b31b87aa3cdb456abf7ea093aaaee672/Untitled%2013.png"/></a></figure><h3 id="01704201-8232-4f9d-a7ea-8cd1d716b349" class=""><strong>Troisième Page: Informations Détailées sur le Produit</strong></h3><p id="7c038aa5-a560-4fee-b9dd-e9b80fdf14f3" class="">La troisième page se focalise sur un produit spécifique, donnant une description détaillée, le prix, la catégorie, le poids, et des informations sur les ventes telles que la quantité vendue, le montant des ventes, et toute donnée manquante ou en attente de traitement. Cette vue granulaire est essentielle pour le suivi des performances au niveau du produit et pour les analyses d&#x27;inventaire.</p><figure id="4c25eaf4-f186-46e6-9303-b54aee6414d5" class="image"><a href="Quels%20outils%20utilise%CC%81%20pour%20traiter%20de%20la%20donne%CC%81e%20s%20b31b87aa3cdb456abf7ea093aaaee672/Untitled%2014.png"><img style="width:5952px" src="Quels%20outils%20utilise%CC%81%20pour%20traiter%20de%20la%20donne%CC%81e%20s%20b31b87aa3cdb456abf7ea093aaaee672/Untitled%2014.png"/></a></figure><h3 id="8b810cb3-09ff-4d5f-b883-5a81e02adbdf" class=""><strong>Connexion avec BigQuery</strong></h3><p id="4abdc395-36b9-423a-9d15-e8db61fc105a" class="">Chaque page tire ses données du dataset <code><strong>dev_dbt_client_bike_shop</strong></code> dans BigQuery, où les modèles DBT ont matérialisé les données transformées. Grâce à l&#x27;intégration native de Streamlit avec Python, il est possible de se connecter directement à BigQuery, d&#x27;exécuter des requêtes SQL et de récupérer des données pour les visualiser. Les utilisateurs peuvent interagir avec les données en temps réel, ce qui fait de Streamlit un outil puissant pour le storytelling basé sur les données.</p><h2 id="5f35d1af-13b2-4eaf-ad85-40cb90e63dd7" class=""><strong>Flexibilité et Personnalisation avec Streamlit et DBT</strong></h2><p id="daecee6a-8062-4178-9e11-9617f6853d34" class="">Les exemples de pages Streamlit que nous avons vus illustrent des applications assez basiques de visualisation de données. Cependant, la simplicité apparente cache une puissante flexibilité. En réalité, les possibilités de création de dashboards, de pages et de graphiques avec Streamlit et DBT sont vastes, limitées uniquement par les besoins et l&#x27;imagination des clients.</p><h3 id="6570ddb6-6066-45de-9be2-86ddc300670e" class=""><strong>Personnalisation des Tableaux de Bord</strong></h3><p id="bd5fd9d8-d9e9-46fd-bc59-ecbf8d13b067" class="">Avec Streamlit, chaque tableau de bord peut être personnalisé pour répondre à des questions commerciales spécifiques. Que ce soit pour suivre la performance des ventes, analyser les coûts opérationnels, ou comprendre le comportement des consommateurs, les dashboards peuvent être adaptés pour fournir des informations pertinentes.</p><h3 id="b7c565ab-03dc-4aa1-a6dc-0c8fdf947934" class=""><strong>Évolutivité des Modèles de Données</strong></h3><p id="c73d2eb0-dfa3-4a68-afc5-0f274c52f7d7" class="">DBT, avec sa capacité à créer et gérer des modèles de données évolutifs, permet de développer des marts de données qui correspondent aux cas d&#x27;usage complexes et variés. L&#x27;ajout de nouveaux modèles de données ou la modification des existants pour répondre à des exigences changeantes est simplifié grâce à la structure modulaire et aux processus de test de DBT.</p><h3 id="a1c34e44-00fc-4270-8f68-d61d29c108c7" class=""><strong>Rôle dans la Pipeline</strong></h3><p id="c44522c1-6d21-425b-9e13-61362ce212f7" class="">Streamlit représente le dernier maillon de notre pipeline de données, transformant les tables de données complexes en visualisations compréhensibles et en dashboards interactifs. L&#x27;application sert d&#x27;interface utilisateur finale, permettant aux parties prenantes d&#x27;explorer les données et de tirer des conclusions fondées sur les analyses fournies.</p><p id="94a5ef05-494a-442a-a028-f3d3d01ba861" class="">
+</p><h1 id="8a3f24ca-a04c-4e3f-86e3-fd1c88fbb3fd" class=""><strong>Conclusion: Une Pipeline de Données Dynamique et Automatisée pour des Insights Actualisés</strong></h1><p id="20f0b5c3-a02d-459c-986c-a1b2634d6c61" class="">Notre exploration à travers la mise en place d&#x27;une pipeline de données robuste et automatisée démontre l&#x27;efficacité d&#x27;une architecture soigneusement conçue. En commençant par l&#x27;intégration des données brutes dans BigQuery, suivie de leur transformation et modélisation via DBT, et en finissant par la visualisation interactive dans Streamlit, nous avons établi un système qui non seulement rationalise le flux de données mais assure également que les insights les plus récents sont toujours à portée de main.</p><h2 id="a3b08401-0ef2-46d4-8813-1dcbfb1fb923" class=""><strong>Objectif de la Pipeline</strong></h2><p id="8aaf04fd-a656-4f5f-9df4-5b1e5b5b17b9" class="">L&#x27;objectif principal de cette pipeline est de permettre un suivi continu et en temps réel des données d&#x27;un client. En s&#x27;assurant que la base de données dans BigQuery est mise à jour quotidiennement, nous garantissons une source d&#x27;information toujours actuelle et prête à être exploitée.</p><h2 id="da1db465-5324-4b69-b548-1796b349d125" class=""><strong>Automatisation avec DBT</strong></h2><p id="70f7bbb4-cfa8-4d49-89df-5f566835cd5f" class="">L&#x27;intégration de DBT dans ce processus permet l&#x27;exécution automatique de <code><strong>dbt build</strong></code>, assurant que toutes les transformations de données et les tests sont exécutés avec chaque nouvelle mise à jour des données. Ceci permet de maintenir une structure de données cohérente et de haute qualité, prête pour l&#x27;analyse et la visualisation.</p><h2 id="63be1605-25eb-4fb5-b556-da9113f5df66" class=""><strong>Interactivité avec Streamlit</strong></h2><p id="1db4cc8c-de4d-4629-83b8-5e607ca78e56" class="">Avec Streamlit, cette pipeline atteint son apogée en fournissant une application web interactive où les données actualisées sont présentées dans des dashboards intuitifs et facilement compréhensibles. Les utilisateurs finaux, qu&#x27;il s&#x27;agisse de data scientists, d&#x27;analystes d&#x27;affaires ou de décideurs, peuvent interagir avec les dernières données, filtrer selon les dimensions qui les intéressent, et obtenir des insights précis qui soutiennent des décisions éclairées.</p><h2 id="791c9d46-7e14-473e-814d-7cc44e7ce72f" class=""><strong>Conclusion</strong></h2><p id="a3a477bc-98e6-4620-9ba1-e24db93366e7" class="">En somme, cette pipeline ne se contente pas de fournir des données ; elle les rend exploitables et significatives. Elle représente un écosystème de données vivant qui s&#x27;adapte et évolue avec les besoins du client. De la collecte à la visualisation, chaque composant travaille en synergie pour assurer que l&#x27;information n&#x27;est pas seulement accessible, mais qu&#x27;elle est également présentée de manière à maximiser son impact et sa valeur.</p><p id="938d986e-53c5-4196-a72b-420ddbd0f8df" class="">C&#x27;est cette capacité à fournir des mises à jour quotidiennes, des transformations de données fiables et des visualisations percutantes qui fait de cette pipeline un atout stratégique pour toute entreprise orientée données. En fin de compte, elle incarne la promesse de la data science moderne : convertir des données en décisions, et des informations en actions.</p><h1 id="a72a789b-050c-489b-ab07-b2395244adcd" class="">Lien</h1><p id="08e9a527-aa71-400a-bc14-f3b4794e6ddd" class="">Pour tous ceux qui souhaitent explorer en détail la pipeline DBT et le code de l&#x27;application Streamlit que nous avons discutée, vous pouvez visiter le dépôt GitHub à l&#x27;adresse suivante : <a href="https://github.com/Stanley-schillaci/veille_techno">Stanley-schillaci/veille_techno</a>. Ce dépôt contient tous les scripts, configurations et fichiers nécessaires pour comprendre et potentiellement réutiliser ou s&#x27;inspirer de la structure mise en place pour cette pipeline de données dynamique. Vous y trouverez les modèles DBT, les scripts de transformation, les tests, ainsi que les scripts Streamlit pour la visualisation des données. N&#x27;hésitez pas à cloner le dépôt, à l&#x27;explorer, à le fork, ou à contribuer si vous avez des améliorations ou des suggestions à partager.</p></li></ol></div></article><span class="sans" style="font-size:14px;padding-top:2em"></span></body></html>
